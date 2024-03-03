@@ -111,6 +111,7 @@ values
 	(0, 'No' ),
 	(1, 'Yes' );
 
+
 create table public.gme(
 	id integer,
 	gme character varying,
@@ -127,7 +128,15 @@ values
 SQL EXTRACT DATA 
 */
 /*
-World Overview by gender
+World Overview
+*/
+
+/*
+OUTPUT 
+columns: 
+	gender -> 'Man'/'Woman'/'Missing'
+	total_diplomatic -> total diplomats by gender
+	percentage -> percentage of diplomats compared to the total
 */
 select
     g.gender,
@@ -143,7 +152,12 @@ order by
 	g.id;
 	
 /*
-World Overview by gender, year-by-year 
+OUTPUT: total diplomats by gender and year
+columns: 
+	year -> [1968-2021]
+	total_man -> total male diplomats for that year
+	total_woman -> total female diplomats for that year
+	total_missing -> total missing diplomats for that year
 */
 select 
 	gd.year,
@@ -156,12 +170,22 @@ group by
 	gd.year
 order by 
 	gd.year;
+/*
+End - World Overview
+*/
 	
 /*
 World Analysis - Job title
 */
 
-/*The query for each title shows the presence of gender*/
+/*
+OUTPUT: for each title shows the presence of gender
+columns: 
+	title -> [1968-2021]
+	percentage_woman -> percentages of women per job title
+	percentage_man -> percentages of men per job title
+	percentage_missing -> percentages of missing per job title
+*/
 select 
     t.title,
     round(
@@ -190,9 +214,13 @@ group by
 order by 
     gd.title asc;	
 
-/*Job title - lower charge percentages*/
+/*
+OUTPUT
+columns: 
+	perc_lower_position -> percentage of presence in lower charge
+*/
 select 
-	round(avg(percentage)::numeric, 1)
+	round(avg(percentage)::numeric, 1) as perc_lower_position
 from(
 	select 
 		gd.v2lgfemlegsend as percentage, 
@@ -209,13 +237,24 @@ from(
 );
 
 /*
+End World Analysis - Job title
+*/
+
+/*
  World Analysis - Mainposting
 */
 
-/*For each responsibility (main_posting/concurrency accreditation) assumed in diplomatic missions, the presence of gender was analysed*/
+/*
+OUTPUT: total number of diplomats by type of assignment(main_posting/concurrency accreditation) and gender
+columns: 
+	main_posting -> 'Main Posting'/'Concurrency Accreditations'/'missing'
+	total_woman -> total woman by type assignment
+	total_man -> total man by type assignment
+	total_missing -> total missing by type assignment
+*/
 select mp.main_posting, 
-	count(case when gd.gender = '1' then 1 else null end) as total_female,
-    count(case when gd.gender = '0' then 1 else null end) as total_male,
+	count(case when gd.gender = '1' then 1 else null end) as total_woman,
+    count(case when gd.gender = '0' then 1 else null end) as total_man,
     count(case when gd.gender = '99' then 1 else null end) as total_missing
 from 
 	public.gendip_dataset gd 
@@ -232,12 +271,18 @@ order by
       	else 2
     end;
 	
-/*data by mainposting in percentage*/
+/*
+OUTPUT: data by mainposting in percentage
+columns: 
+	main_posting -> 'Main Posting'/'Concurrency Accreditations'/'missing'
+	percentage_woman -> percentage woman by type assignment
+	percentage_man -> percentage man by type assignment
+	percentage_missing -> percentage missing by type assignment
+*/
 select mp.main_posting, 
-	round((count(case when gd.gender = '1' then 1 else null end)::numeric/count(*))*100, 2) as percentage_female,
-    round((count(case when gd.gender = '0' then 1 else null end)::numeric/count(*))*100, 2) as percentage_male,
-    round((count(case when gd.gender = '99' then 1 else null end)::numeric/count(*))*100, 2) as percentage_missing,
-	count(*)
+	round((count(case when gd.gender = '1' then 1 else null end)::numeric/count(*))*100, 2) as percentage_woman,
+    round((count(case when gd.gender = '0' then 1 else null end)::numeric/count(*))*100, 2) as percentage_man,
+    round((count(case when gd.gender = '99' then 1 else null end)::numeric/count(*))*100, 2) as percentage_missing
 from 
 	public.gendip_dataset gd 
 	inner join 
@@ -252,9 +297,20 @@ order by
         when mp.id = 0 then 1
       	else 2
     end;
+/*
+ End World Analysis - Mainposting
+*/
 	
 /*
 World Analysis - COW
+*/
+/*
+OUTPUT: total diplomats sent with the same COW range, divided by gender
+columns: 
+ccodecowreceive_range -> range of cow [1-100],[101-200]...[901-1000]
+	total_woman -> total woman by COW
+	total_man -> total man by COW
+	total_missing -> total missing by COW
 */
 select 
 	case 
@@ -269,9 +325,9 @@ select
 		when gd.ccodecowreceive between 801 and 900 then '[801-900]'
 		else '[901-1000]'
 	end as ccodecowreceive_range,
-	sum(case when gd.gender = '0' then 1 else 0 end) as man,
-	sum(case when gd.gender = '1' then 1 else 0 end) as woman,
-	sum(case when gd.gender = '99' then 1 else 0 end) as missing
+	sum(case when gd.gender = '0' then 1 else 0 end) as total_man,
+	sum(case when gd.gender = '1' then 1 else 0 end) as total_woman,
+	sum(case when gd.gender = '99' then 1 else 0 end) as total_missing
 from 
 	public.gendip_dataset as gd
 where 
@@ -290,15 +346,26 @@ group by
 		else '[901-1000]'
 	end
 order by 
-	gd.ccodecowreceive_range;
-	
+	ccodecowreceive_range;
+/*
+End World Analysis - COW
+*/
+
 /*
 World Analysis - GME
 */
+/*
+OUTPUT: total diplomats sent from non-GME countries to GME countries and organized by gender
+columns: 
+	year -> [1968-2021]
+	total_woman -> total women sent to GME states
+	total_man -> total men sent to GME states
+	total_missing -> total missing sent to GME states
+*/
 select 
 	gd.year,
-	count(case when gd.gender = '1' then 1 else null end) as total_female,
-    count(case when gd.gender = '0' then 1 else null end) as total_male,
+	count(case when gd.gender = '1' then 1 else null end) as total_woman,
+    count(case when gd.gender = '0' then 1 else null end) as total_man,
     count(case when gd.gender = '99' then 1 else null end) as total_missing
 from 
 	public.gendip_dataset as gd
@@ -309,7 +376,11 @@ group by
 	gd.year
 order by 
 	gd.year;
-	
+/*
+End World Analysis - GME
+*/
+
+
 /*
 WORLD VS ITALIAN ANALYSIS
 */
@@ -318,13 +389,21 @@ WORLD VS ITALIAN ANALYSIS
 Italy Overview
 */
 
-/*Percentage of female diplomats in the world from 1968-2021*/
+/*
+OUTPUT
+columns: 
+	percentage_woman -> Percentage of female diplomats in the world from 1968-2021
+*/
 select 
 	round(count(case when gd.gender = '1' then 1 else null end)*100::numeric/count(*), 2) as percent_woman
 from
     public.gendip_dataset as gd;
 	
-/*Percentage of female diplomats in Italy from 1968-2021*/
+/*
+OUTPUT
+columns: 
+	percentage_woman -> Percentage of female diplomats in Italy from 1968-2021
+*/
 select 
 	round(count(case when gd.gender = '1' then 1 else null end)*100::numeric/count(*), 2) as percent_woman
 from
@@ -332,7 +411,14 @@ from
 where
 	gd.cnamesend = 'Italy';
 
-/*Historical series: percentages of female diplomats in Italy and around the world from 1968 to 2021*/
+/*
+OUTPUT: Historical series: percentages of female diplomats in Italy and around the world from 1968 to 2021
+columns: 
+	year -> [1968-2021]
+	world_perc -> percentage of diplomatic representation in the world for the year
+	italy_perc -> percentage of diplomatic representation in Italy for the year
+	gap_it -> difference between Italy and the world
+*/
 select 
 	w_perc.year, 
 	w_perc.perc_world_dip_w as world_perc, 
@@ -364,18 +450,68 @@ on w_perc.year = i_perc.year
 order by 
 	year;
 	
+/*total country*/
+/*
+OUTPUT
+columns: 
+	total_country -> total country in dataset
+*/
+select count(distinct(cnamesend)) as total_country
+from public.gendip_dataset as gd
+--211
+
+/*
+OUTPUT: positioning of Italy in a ranking from the state with the greatest female representation to the least
+columns: 
+	country -> Italy
+	perc_woman -> percentage of women present
+	woman_percentage_rank -> position
+*/
+select 
+	country,
+	round(woman_percentage,2) as perc_woman_rapres,
+	woman_percentage_rank
+from(
+	select
+		country,
+		woman_percentage,
+		rank() over (order by woman_percentage desc) as woman_percentage_rank
+	from (
+		select 
+			gd.cnamesend as country, 
+			count(case when gd.gender = '1' then 1 else NULL end)::numeric / count(gd.gender) as woman_percentage
+		from 
+			public.gendip_dataset as gd
+		group by 
+			gd.cnamesend
+	)
+)
+where 
+	country = 'Italy';
+
+/*
+End Italy Overview
+*/
+
 /*
 Italy vs World - Job Titles 
+*/
+/*
+OUTPUT
+columns: 
+	title -> job position
+	perc_world_by_title -> percentage of female representation in the world for the specific job title
+	perc_italy_by_title -> percentage of female representation in italy for the specific job title
 */
 select 
 	world_title.title, 
 	world_title.perc_world_by_title, 
-	coalesce(italy_title.perc_italy_by_title, 0.00) as perc_italy_by_title
+	coalesce(italy_title.perc_italy_by_title, 0.0) as perc_italy_by_title
 from (
 	select 
 		t.id,
 		t.title,
-		round(count(case when gd.gender = '1' then 1 else null end)*100::numeric/count(*), 2) as perc_world_by_title
+		round(count(case when gd.gender = '1' then 1 else null end)*100::numeric/count(*), 1) as perc_world_by_title
 	from 
 		public.gendip_dataset as gd
 		inner join
@@ -388,7 +524,7 @@ left join (
 	select 
 		t.id,
 		t.title,
-		round(count(case when gd.gender = '1' then 1 else null end)*100::numeric/count(*), 2) as perc_italy_by_title
+		round(count(case when gd.gender = '1' then 1 else null end)*100::numeric/count(*), 1) as perc_italy_by_title
 	from 
 		public.gendip_dataset as gd
 		inner join
@@ -402,6 +538,13 @@ left join (
 order by world_title.id;
 
 /*Job title - lower charge percentages from Italy*/
+/*
+OUTPUT
+columns: 
+	title -> job position
+	perc_world_by_title -> percentage of female representation in the world for the specific job title
+	perc_italy_by_title -> percentage of female representation in italy for the specific job title
+*/
 select round(avg(v2lgfemlegsend)::numeric, 2)
 from(
 	select 
@@ -416,9 +559,13 @@ from(
 		gd.year
 );
 
-/*Job title - lower charge percentages*/
+/*
+OUTPUT
+columns: 
+	perc_lower_position -> percentage of presence in Italy in lower charge
+*/
 select 
-	round(avg(percentage)::numeric, 1)
+	round(avg(percentage)::numeric, 1) as perc_lower_position
 from(
 	select 
 		gd.v2lgfemlegsend as percentage, 
@@ -433,35 +580,44 @@ from(
 		gd.year, 
 		gd.cnamesend
 );
+/*
+End Italy vs World - Job Titles 
+*/
 
 /*
 Italy vs World - mainposting
 */
 
-/*percentage of diplomatic missions assigned solely (main posting) to Italian women*/
+/*
+OUTPUT: percentage of diplomatic missions assigned solely (main posting) to Italian women
+columns: 
+	mainposting_it_percentage -> percentage of presence in Italy in main_posting
+*/
 select 
-	round(((count(case when gd.gender = '0' then 1 else null end) +
-		count(case when gd.gender = '1' then 1 else null end) +
-		count(case when gd.gender = '99' then 1 else null end))::numeric)/
-		count(case when gd.gender = '1' then 1 else null end), 2)
-		as mainposting_it_percentage
+	round(((count(case when gd.gender = '1' then 1 else null end)::numeric)/count(gd.gender)) * 100, 2) as mainposting_it_percentage
 from public.gendip_dataset as gd
 where 
 	gd.cnamesend = 'Italy'
 	and gd.mainposting = 1;
 
-/*percentage of diplomatic missions assigned solely (main posting) to women worldwide*/
+/*
+OUTPUT: percentage of diplomatic missions assigned solely (main posting) to women worldwide
+columns: 
+	mainposting_it_percentage -> percentage of presence in world in main_posting
+*/
 select 
-	round(((count(case when gd.gender = '0' then 1 else null end) +
-		count(case when gd.gender = '1' then 1 else null end) +
-		count(case when gd.gender = '99' then 1 else null end))::numeric)/
-		count(case when gd.gender = '1' then 1 else null end), 1)
-		as mainposting_world_percentage
+	round(((count(case when gd.gender = '1' then 1 else null end)::numeric)/count(gd.gender)) * 100, 2) as mainposting_world_percentage
 from public.gendip_dataset as gd
 where 
 	gd.mainposting = 1;
 
-/*historical series: percentages of women who have had a main posting in Italy and around the world */
+/*
+OUTPUT: historical series: percentages of women who have had a main posting in Italy and around the world
+columns: 
+	year -> [1968-2021]
+	world_perc -> world percentage
+	italy_perc -> italy percentage
+*/
 select 
 world_main_by_year_perc.year,
 world_main_by_year_perc.woman_percentage as world_perc,
@@ -493,8 +649,20 @@ inner join (
 	order by 
 		gd.year
 )as it_main_by_year_perc on it_main_by_year_perc.year = world_main_by_year_perc.year;
+/*
+end Italy vs World - mainposting
+*/
 
-/*Italy vs World - COW*/
+/*
+Italy vs World - COW
+*/
+/*
+OUTPUT: percentage of women sent based on the COW of the receiving country
+columns: 
+	cow_range -> [1-100], [101-200]...[901-1000]
+	perc_italy -> italy percentage
+	perc_world -> world percentage
+*/
 select 
 	cow_italy.ccodecowreceive_range as cow_range, 
 	cow_italy.perc_female as perc_italy,
@@ -579,12 +747,19 @@ inner join (
 		end
 ) as cow_world
 on cow_world.ccodecowreceive_range = cow_italy.ccodecowreceive_range;
+/*
+End Italy vs World - COW
+*/
 
 /*
 Italy vs World - GME
 */
 
-/*Percent send women in GME zone from Italy*/
+/*
+OUTPUT
+columns: 
+	perc_female -> Percent send women in GME zone from Italy
+*/
 select 
 	round((sum(case when gd.gender = '1' then 1 else 0 end)::numeric)*100/count(*), 1) as perc_female
 from 
@@ -594,7 +769,11 @@ where
 	and gd.gmesend = 0
 	and gd.cnamesend = 'Italy';
 
-/*Percent send women in GME zone from world*/
+/*
+OUTPUT
+columns: 
+	perc_female -> Percent send women in GME zone from world
+*/
 select 
 	round((sum(case when gd.gender = '1' then 1 else 0 end)::numeric)*100/count(*), 1) as perc_female
 from 
@@ -603,8 +782,13 @@ where
 	gd.gmereceive = 1
 	and gd.gmesend = 0;
 
-
-/*Percent send women in GME zone year-by-year from Italy and World*/
+/*
+OUTPUT: Percent send women in GME zone year-by-year from Italy and World
+columns: 
+	year -> [1968-2021]
+	perc_wor_women -> percentage of women sent to GME states in the specific year
+	perc_ita_women -> percentage of women from italy sent to GME states in the specific year
+*/
 with tot_numbers as(
 	select 
 		year,
@@ -648,3 +832,7 @@ inner join
 on percent_women_gme_italy_by_year.year = percent_women_gme_world_by_year.year
 order by 
 	year;
+
+/*
+End Italy vs World - GME
+*/
