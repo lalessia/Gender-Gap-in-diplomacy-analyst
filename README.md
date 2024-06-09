@@ -1,4 +1,4 @@
-# GenderGap in Diplomacy Envirnoment - Data Analyst
+# GenderGap in Diplomacy Envirnoment - Data Analisys
 
 ## Uno sguardo sulla differenza di genere nelle missioni diplomatiche nel mondo e un focus sull’Italia
 
