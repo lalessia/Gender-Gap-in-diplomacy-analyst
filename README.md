@@ -14,51 +14,34 @@ L'analisi si basa sui dati provenienti dal dataset [GenDip](https://www.gu.se/en
 
 Per i chiarimenti sul dataset e sulle colonne, si rimanda la lettura del [codebook](https://www.gu.se/sites/default/files/2023-06/GenDip_Dataset_Codebook_vJune23_2023-06-13.pdf).
 
-Per effettuare l'analisi, è stato usato PostgreSQL 14.12 e pgadmin4 7.6
-
 ## Struttura della repository
 
 All'interno sono state rilasciate i seguenti componenti:
 
-**Diplomazia_Italiana_al_femminile.pdf**: slide riassuntive che spiegano il lavoro svolto
+**Diplomazia_Italiana_al_femminile.pdf**: presentazione lavoro
+
 **GenDip_Dataset_public_mainpostings_anonymous_1968-2021_2023-05-30.xlsx**: dataset originale
+
 **gendip_dataset.csv**: dataset trasformato in csv per permetterne la lavorazione tramite iil DBMS
+
 **gendip_query.sql**: query svolte al fine dell'analisi
+
+
+## Aspetti tecnici
+
+Per effettuare l'analisi, sono stati usati PostgreSQL 14.12 e pgadmin4 7.6.
+
+Per la conversione del file xlsx in csv e la creazione del template per la creazione delle tabelle sql è stato creato il progetto: [Create_SQL_script_from_csv_xlsx_dataset](https://github.com/lalessia/Create_SQL_script_from_csv_xlsx_dataset)
 
 ## Installazione
 
+Per riprodurre le query svolte
 
 
 
 
 
-Lo studio ha seguito 3 fasi:
-1. **Analisi del Dataset** : una prima analisi del dataset per capire come fosse strutturato
-     
-2. **Analisi Mondiale**: una successiva analisi sella situazione mondiale sotto gli aspetti che il dataset poteva mettere a disposizione
-      
-3. **Analisi Italiana**: un'ultima 
-P
 
-Inizieremo con un'analisi a livello mondiale, concentrandoci sui numeri assoluti, per mettere in evidenza la rappresentanza femminile rispetto a quella maschile sotto diversi aspetti.
-Successivamente, esamineremo il posizionamento dell'Italia rispetto al contesto mondiale.
-Per farlo, lo studio si avvarrà di una serie di grafici che confrontano le percentuali italiane con quelle del resto del mondo, esaminando gli stessi aspetti presi in considerazione nell'analisi mondiale.
-
-Gli step per effettuare l'analisi sono stati i seguenti:
-
-1) descrizione del informazioni dataset
-2) conversione xlsx to csv
-3) Analisi del dataset
-4) importazione dei dataset su postgres
-5) estrazione dei dati da postgres e importati su canva per mostrare i grafici nella presentazione
-6) 
-
-## Indice
-1. [Installazione](#installazione)
-2. [Utilizzo](#utilizzo)
-3. [Contributi](#contributi)
-4. [Licenza](#licenza)
-5. [Riferimenti](#riferimenti)
 
 ## Installazione
 
