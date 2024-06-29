@@ -35,7 +35,11 @@ Per la conversione del file xlsx in csv e la creazione del template per la creaz
 
 ## Installazione
 
-Per riprodurre le query svolte
+Per riprodurre le query svolte è necessario:
+1. Accedere a pgadmin
+2. Creare un Database
+3. Aprire il file gendip_query.sql, e lanciare le query dalla riga 1 fino alla 125, che sono le query per la creazione delle tabelle
+4. Importare il dataset
 
 
 
@@ -60,3 +64,4 @@ source venv/bin/activate  # Su Windows usa `venv\Scripts\activate`
 
 # Installa le dipendenze
 pip install -r requirements.txt
+
