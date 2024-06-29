@@ -1,6 +1,8 @@
 # GenderGap in Diplomacy Envirnoment - Data Analisys
 
-## Uno sguardo sulla differenza di genere nelle missioni diplomatiche nel mondo e un focus sull’Italia
+## Overview
+
+<h4>Uno sguardo sulla differenza di genere nelle missioni diplomatiche nel mondo e un focus sull’Italia</h4>
 
 Il progetto si propone un'analisi della diplomazia dal punto di vista della rappresentanza di genere dal 1961-2021 durante le missioni diplomatiche mondiali, cercando di collocare l'Italia in un panorama mondiale.
 
@@ -8,7 +10,7 @@ L'obiettivo nasce da una mia esigenza personale, di capire perché nel 21° seco
 
 Questo progetto è nato durante il mio percorso su [start2impact](https://www.start2impact.it/), esattamente quando ho svolto il corso di SQL e quello che state vedendo è il final project.
 
-## Descrizione del progetto
+## Data source
 
 L'analisi si basa sui dati provenienti dal dataset [GenDip](https://www.gu.se/en/gendip/the-gendip-dataset-on-gender-and-diplomatic-representation).
 
@@ -16,7 +18,7 @@ Per i chiarimenti sul dataset e sulle colonne, si rimanda la lettura del [codebo
 
 ## Struttura della repository
 
-All'interno sono state rilasciate i seguenti componenti:
+All'interno della repository sono stati rilasciati i seguenti componenti:
 
 **Diplomazia_Italiana_al_femminile.pdf**: presentazione lavoro
 
@@ -36,32 +38,8 @@ Per la conversione del file xlsx in csv e la creazione del template per la creaz
 ## Installazione
 
 Per riprodurre le query svolte è necessario:
-1. Accedere a pgadmin
-2. Creare un Database
-3. Aprire il file gendip_query.sql, e lanciare le query dalla riga 1 fino alla 125, che sono le query per la creazione delle tabelle
-4. Importare il dataset
-
-
-
-
-
-
-
-## Installazione
-
-Istruzioni per installare il progetto. Includi i prerequisiti e i comandi necessari.
-
-```bash
-# Clona il repository
-git clone https://github.com/tuo-username/nome-del-progetto.git
-
-# Entra nella directory del progetto
-cd nome-del-progetto
-
-# (Opzionale) Crea un ambiente virtuale
-python3 -m venv venv
-source venv/bin/activate  # Su Windows usa `venv\Scripts\activate`
-
-# Installa le dipendenze
-pip install -r requirements.txt
-
+1. Accedere a pgadmin:
+2. Creare un Database:
+3. Creare le tabelle: Aprire il file <i>gendip_query.sql</i> e lanciare le query dalla riga 1 fino alla 125, che sono le query per la creazione delle tabelle
+4. Importare il dataset:
+5. Riprodurre le query: dalla riga 127 alla riga 834
