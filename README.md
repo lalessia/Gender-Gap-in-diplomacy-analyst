@@ -1,45 +1,47 @@
-# GenderGap in Diplomacy Envirnoment - Data Analisys
+# Gender Gap in the Diplomatic Environment - Data Analysis
+An exploration of gender disparities in diplomatic missions worldwide, with a focus on Italy.
 
 ## Overview
+This project aims to analyze gender representation in diplomacy from 1961 to 2021, focusing on global diplomatic missions and positioning Italy within a worldwide context.
 
-<h4>Uno sguardo sulla differenza di genere nelle missioni diplomatiche nel mondo e un focus sull’Italia</h4>
+The data analysis was conducted using **SQL** on a **PostgreSQL** database.
 
-Il progetto si propone un'analisi della diplomazia dal punto di vista della rappresentanza di genere dal 1961-2021 durante le missioni diplomatiche mondiali, cercando di collocare l'Italia in un panorama mondiale.
+The motivation behind this project stems from my personal curiosity to understand why, in the 21st century, we still discuss gender discrimination. To address this question, I believe it’s essential to focus on every area where this issue may arise, including diplomacy! What better way to find answers than through data? :smiley:
 
-L'obiettivo nasce da una mia esigenza personale, di capire perché nel 21° secolo dobbiamo parlare di discriminazione di genere e per rispondere a queste domande, ritengo sia necessario mettere un focus in ogni abito in cui può emeregere questa problematica, anche quello diplomatico! Quale migliore risposta, se non quella di farci aiutare dai dati :smiley:
+This project was developed during my journey with [start2impact](https://www.start2impact.it/), specifically during the SQL course, and what you see here is the final project.
 
-Questo progetto è nato durante il mio percorso su [start2impact](https://www.start2impact.it/), esattamente quando ho svolto il corso di SQL e quello che state vedendo è il final project.
+## Data Source
+The analysis is based on data from the [GenDip dataset](https://www.gu.se/en/gendip/the-gendip-dataset-on-gender-and-diplomatic-representation).
 
-## Data source
+For detailed information on the dataset and its columns, please refer to the [codebook](https://www.gu.se/sites/default/files/2023-06/GenDip_Dataset_Codebook_vJune23_2023-06-13.pdf).
 
-L'analisi si basa sui dati provenienti dal dataset [GenDip](https://www.gu.se/en/gendip/the-gendip-dataset-on-gender-and-diplomatic-representation).
+## Repository Structure
+The repository contains the following components:
 
-Per i chiarimenti sul dataset e sulle colonne, si rimanda la lettura del [codebook](https://www.gu.se/sites/default/files/2023-06/GenDip_Dataset_Codebook_vJune23_2023-06-13.pdf).
+- **Diplomazia_Italiana_al_femminile.pdf**: Project presentation
+- **GenDip_Dataset_public_mainpostings_anonymous_1968-2021_2023-05-30.xlsx**: Original dataset
+- **gendip_dataset.csv**: Dataset converted to CSV for processing via the DBMS - Postgres
+- **gendip_query.sql**: SQL queries used for the analysis
+  
+## Technical Details
+For the analysis, PostgreSQL 14.12 and pgAdmin 4 version 7.6 were used.
 
-## Struttura della repository
+To convert the XLSX file to CSV and create the template for SQL table creation, the project Create_SQL_script_from_csv_xlsx_dataset was developed.
 
-All'interno della repository sono stati rilasciati i seguenti componenti:
+## Installation
+To reproduce the queries, follow these steps:
 
-**Diplomazia_Italiana_al_femminile.pdf**: presentazione lavoro
+1. Access pgAdmin.
+2. Create a Database.
+3. Create the tables: Open the file <i>gendip_query.sql</i> and run the queries from line 1 to 125, which are the queries for table creation.
+4. Import the dataset.
+5. Reproduce the analysis queries: Run the queries from line 127 to 834.
 
-**GenDip_Dataset_public_mainpostings_anonymous_1968-2021_2023-05-30.xlsx**: dataset originale
+## License
+This project is licensed under the MIT License. Feel free to use, modify, and distribute the code as per the license terms.
 
-**gendip_dataset.csv**: dataset trasformato in csv per permetterne la lavorazione tramite iil DBMS
+## Acknowledgements
+I would like to express my gratitude to start2impact for providing the learning platform and resources that enabled me to develop this project.
 
-**gendip_query.sql**: query svolte al fine dell'analisi
+Special thanks to the creators of the GenDip dataset for making this valuable data available for research purposes.
 
-
-## Aspetti tecnici
-
-Per effettuare l'analisi, sono stati usati PostgreSQL 14.12 e pgadmin4 7.6.
-
-Per la conversione del file xlsx in csv e la creazione del template per la creazione delle tabelle sql è stato creato il progetto: [Create_SQL_script_from_csv_xlsx_dataset](https://github.com/lalessia/Create_SQL_script_from_csv_xlsx_dataset)
-
-## Installazione
-
-Per riprodurre le query svolte è necessario:
-1. Accedere a pgadmin:
-2. Creare un Database:
-3. Creare le tabelle: Aprire il file <i>gendip_query.sql</i> e lanciare le query dalla riga 1 fino alla 125, che sono le query per la creazione delle tabelle
-4. Importare il dataset:
-5. Riprodurre le query: dalla riga 127 alla riga 834
