@@ -1,5 +1,7 @@
 # Gender Gap in the Diplomatic Environment - Data Analysis
-An exploration of gender disparities in diplomatic missions worldwide, with a focus on Italy.
+Did you know that despite decades of progress, the gender gap in diplomatic roles remains significant? This project dives into the data to uncover why, focusing on global diplomatic missions with a special spotlight on Italy from 1961 to 2021.
+
+Using SQL on a PostgreSQL database, this analysis seeks to understand the persistent gender disparities in diplomacy and explore potential solutions. Join me in uncovering the data behind the discussions of gender discrimination in the 21st century.
 
 ## Overview
 This project aims to analyze gender representation in diplomacy from 1961 to 2021, focusing on global diplomatic missions and positioning Italy within a worldwide context.
@@ -9,6 +11,14 @@ The data analysis was conducted using **SQL** on a **PostgreSQL** database.
 The motivation behind this project stems from my personal curiosity to understand why, in the 21st century, we still discuss gender discrimination. To address this question, I believe it’s essential to focus on every area where this issue may arise, including diplomacy! What better way to find answers than through data? :smiley:
 
 This project was developed during my journey with [start2impact](https://www.start2impact.it/), specifically during the SQL course, and what you see here is the final project.
+
+## Table of Contents
+- [Data Source](#data-source)
+- [Repository Structure](#repository-structure)
+- [Technical Details](#technical-details)
+- [Installation](#installation)
+- [License](#license)
+- [Acknowledgements](#acknowledgements)
 
 ## Data Source
 The analysis is based on data from the [GenDip dataset](https://www.gu.se/en/gendip/the-gendip-dataset-on-gender-and-diplomatic-representation).
